@@ -1,25 +1,27 @@
 #include "stdafx.h"
-#include "oak.h"
-#include "core.h"
+#include "config_file_tree.h"
 
-
-extern "C"
+namespace oak
     {
+
     //////////////////////////////////////////////////////////////////////////
-    OAK_API orxSTATUS /*orxFASTCALL*/ oak_init()
+    config_file_tree::config_file_tree() : ui_component("config_file_tree")
         {
-        return oak::core::get().init();
+        }
+
+
+    //////////////////////////////////////////////////////////////////////////
+    config_file_tree::~config_file_tree()
+        {
         }
 
     //////////////////////////////////////////////////////////////////////////
-    OAK_API orxSTATUS /*orxFASTCALL*/ oak_run()
+    void config_file_tree::render()
         {
-        return oak::core::get().run();
+
         }
 
-    //////////////////////////////////////////////////////////////////////////
-    OAK_API void /*orxFASTCALL*/ oak_exit()
-        {
-        oak::core::get().exit();
-        }
+
+
+
     }

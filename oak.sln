@@ -4,6 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.27428.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "oak", "oak\oak.vcxproj", "{B139E4AB-D55D-4F42-8599-EE25AD51E94D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2C3B005A-4AB9-6341-A25A-6F3200EBEFB8} = {2C3B005A-4AB9-6341-A25A-6F3200EBEFB8}
+		{DE44C2A2-CA1C-42B7-8F94-07E6E0C2EBE2} = {DE44C2A2-CA1C-42B7-8F94-07E6E0C2EBE2}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "orxLIB", "external\orx\code\build\windows\vs2017\orxLIB.vcxproj", "{C84FBF13-CADC-4844-9829-B9A399F0D7B7}"
 EndProject
@@ -12,6 +16,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "orx_project", "orx_project", "{4C794264-4A6A-4EFA-8009-273546A77396}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImGui", "ImGui\ImGui.vcxproj", "{DE44C2A2-CA1C-42B7-8F94-07E6E0C2EBE2}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_application", "test_application\test_application.vcxproj", "{06047831-9871-4B34-9263-814FC28BDA4E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B139E4AB-D55D-4F42-8599-EE25AD51E94D} = {B139E4AB-D55D-4F42-8599-EE25AD51E94D}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -125,6 +134,30 @@ Global
 		{DE44C2A2-CA1C-42B7-8F94-07E6E0C2EBE2}.Release|x64.Build.0 = Release|x64
 		{DE44C2A2-CA1C-42B7-8F94-07E6E0C2EBE2}.Release|x86.ActiveCfg = Release|Win32
 		{DE44C2A2-CA1C-42B7-8F94-07E6E0C2EBE2}.Release|x86.Build.0 = Release|Win32
+		{06047831-9871-4B34-9263-814FC28BDA4E}.Core Debug|x64.ActiveCfg = Debug|x64
+		{06047831-9871-4B34-9263-814FC28BDA4E}.Core Debug|x64.Build.0 = Debug|x64
+		{06047831-9871-4B34-9263-814FC28BDA4E}.Core Debug|x86.ActiveCfg = Debug|Win32
+		{06047831-9871-4B34-9263-814FC28BDA4E}.Core Debug|x86.Build.0 = Debug|Win32
+		{06047831-9871-4B34-9263-814FC28BDA4E}.Core Profile|x64.ActiveCfg = Release|x64
+		{06047831-9871-4B34-9263-814FC28BDA4E}.Core Profile|x64.Build.0 = Release|x64
+		{06047831-9871-4B34-9263-814FC28BDA4E}.Core Profile|x86.ActiveCfg = Release|Win32
+		{06047831-9871-4B34-9263-814FC28BDA4E}.Core Profile|x86.Build.0 = Release|Win32
+		{06047831-9871-4B34-9263-814FC28BDA4E}.Core Release|x64.ActiveCfg = Release|x64
+		{06047831-9871-4B34-9263-814FC28BDA4E}.Core Release|x64.Build.0 = Release|x64
+		{06047831-9871-4B34-9263-814FC28BDA4E}.Core Release|x86.ActiveCfg = Release|Win32
+		{06047831-9871-4B34-9263-814FC28BDA4E}.Core Release|x86.Build.0 = Release|Win32
+		{06047831-9871-4B34-9263-814FC28BDA4E}.Debug|x64.ActiveCfg = Debug|x64
+		{06047831-9871-4B34-9263-814FC28BDA4E}.Debug|x64.Build.0 = Debug|x64
+		{06047831-9871-4B34-9263-814FC28BDA4E}.Debug|x86.ActiveCfg = Debug|Win32
+		{06047831-9871-4B34-9263-814FC28BDA4E}.Debug|x86.Build.0 = Debug|Win32
+		{06047831-9871-4B34-9263-814FC28BDA4E}.Profile|x64.ActiveCfg = Release|x64
+		{06047831-9871-4B34-9263-814FC28BDA4E}.Profile|x64.Build.0 = Release|x64
+		{06047831-9871-4B34-9263-814FC28BDA4E}.Profile|x86.ActiveCfg = Release|Win32
+		{06047831-9871-4B34-9263-814FC28BDA4E}.Profile|x86.Build.0 = Release|Win32
+		{06047831-9871-4B34-9263-814FC28BDA4E}.Release|x64.ActiveCfg = Release|x64
+		{06047831-9871-4B34-9263-814FC28BDA4E}.Release|x64.Build.0 = Release|x64
+		{06047831-9871-4B34-9263-814FC28BDA4E}.Release|x86.ActiveCfg = Release|Win32
+		{06047831-9871-4B34-9263-814FC28BDA4E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
