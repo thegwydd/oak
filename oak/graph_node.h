@@ -39,6 +39,14 @@ namespace oak
     using graph_node_list = std::list<std::shared_ptr<graph_node>>;
 
     //////////////////////////////////////////////////////////////////////////
+    struct visual_state
+        {
+        using ptr = std::shared_ptr<visual_state>;
+        visual_state() {}
+        virtual ~visual_state() {}
+        };
+
+    //////////////////////////////////////////////////////////////////////////
     class graph_node
         {
         public:
@@ -70,13 +78,17 @@ namespace oak
             const graph_node_list & children() const { return m_children; }
             void add_child(graph_node::ptr n) { m_children.push_back(n); }
 
+            const visual_state::ptr & visual_state() const { return m_visual_state; }
+            void visual_state(visual_state::ptr n) { m_visual_state = n; }
+
         protected:
-            std::string     m_name;
-            std::string     m_tooltip;
-            std::string     m_description;
-            node_type       m_type;
-            node_file_type  m_file_type;
-            graph_node_list m_children;
+            std::string         m_name;
+            std::string         m_tooltip;
+            std::string         m_description;
+            node_type           m_type;
+            node_file_type      m_file_type;
+            graph_node_list     m_children;
+            visual_state::ptr   m_visual_state;
 
         };
 

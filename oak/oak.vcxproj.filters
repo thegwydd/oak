@@ -32,8 +32,8 @@
     <ClInclude Include="core.h">
       <Filter>core</Filter>
     </ClInclude>
-    <ClInclude Include="config_file_tree.h">
-      <Filter>core</Filter>
+    <ClInclude Include="oak_logger.h">
+      <Filter>common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -59,8 +59,8 @@
     <ClCompile Include="core.cpp">
       <Filter>core</Filter>
     </ClCompile>
-    <ClCompile Include="config_file_tree.cpp">
-      <Filter>core</Filter>
+    <ClCompile Include="oak_logger.cpp">
+      <Filter>common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

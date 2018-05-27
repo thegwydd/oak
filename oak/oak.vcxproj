@@ -72,28 +72,28 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)external\imgui;$(SolutionDir)external\orx\code\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)external\imgui;$(SolutionDir)external\orx\code\include;$(SolutionDir)external\spdlog\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)bin\$(Configuration)\;$(SolutionDir)external\orx\code\lib\dynamic;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
     <IntDir>$(SolutionDir)obj\$(Configuration)\$(TargetName)\</IntDir>
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)external\imgui;$(SolutionDir)external\orx\code\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)external\imgui;$(SolutionDir)external\orx\code\include;$(SolutionDir)external\spdlog\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)bin\$(Configuration)\;$(SolutionDir)external\orx\code\lib\dynamic;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
     <IntDir>$(SolutionDir)obj\$(Configuration)\$(TargetName)\</IntDir>
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)external\imgui;$(SolutionDir)external\orx\code\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)external\imgui;$(SolutionDir)external\orx\code\include;$(SolutionDir)external\spdlog\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)bin\$(Configuration)\;$(SolutionDir)external\orx\code\lib\dynamic;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
     <IntDir>$(SolutionDir)obj\$(Configuration)\$(TargetName)\</IntDir>
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)external\imgui;$(SolutionDir)external\orx\code\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)external\imgui;$(SolutionDir)external\orx\code\include;$(SolutionDir)external\spdlog\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)bin\$(Configuration)\;$(SolutionDir)external\orx\code\lib\dynamic;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
     <IntDir>$(SolutionDir)obj\$(Configuration)\$(TargetName)\</IntDir>
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
@@ -195,13 +195,13 @@ copy /Y "$(ProjectDir)*.ini" "$(SolutionDir)bin\$(Configuration)\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="config_file_tree.h" />
     <ClInclude Include="enum_utility.h" />
     <ClInclude Include="graph_node.h" />
     <ClInclude Include="imgui_impl_orx.h" />
     <ClInclude Include="core.h" />
     <ClInclude Include="ini.h" />
     <ClInclude Include="oak.h" />
+    <ClInclude Include="oak_logger.h" />
     <ClInclude Include="resource_tree.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="string_utility.h" />
@@ -209,7 +209,6 @@ copy /Y "$(ProjectDir)*.ini" "$(SolutionDir)bin\$(Configuration)\"</Command>
     <ClInclude Include="ui_component.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="config_file_tree.cpp" />
     <ClCompile Include="graph_node.cpp" />
     <ClCompile Include="imgui_impl_orx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
@@ -222,6 +221,7 @@ copy /Y "$(ProjectDir)*.ini" "$(SolutionDir)bin\$(Configuration)\"</Command>
     </ClCompile>
     <ClCompile Include="core.cpp" />
     <ClCompile Include="oak.cpp" />
+    <ClCompile Include="oak_logger.cpp" />
     <ClCompile Include="resource_tree.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

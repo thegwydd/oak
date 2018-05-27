@@ -223,58 +223,61 @@ void ImGui_Orx_InvalidateDeviceObjects()
 //////////////////////////////////////////////////////////////////////////
 void ImGui_Orx_Render(void * pvViewport, ImDrawData* draw_data)
     {
-    orxVIEWPORT * pstViewport = (orxVIEWPORT *)pvViewport;
-
-    // Avoid rendering when minimized, scale coordinates for retina displays (screen coordinates != framebuffer coordinates)
-    ImGuiIO& io = ImGui::GetIO();
-    int fb_width = (int)(io.DisplaySize.x * io.DisplayFramebufferScale.x);
-    int fb_height = (int)(io.DisplaySize.y * io.DisplayFramebufferScale.y);
-    if (fb_width == 0 || fb_height == 0)
-        return;
-    draw_data->ScaleClipRects(io.DisplayFramebufferScale);
-
-    // Gets screen bitmap
-    orxBITMAP * pstScreen = orxDisplay_GetScreenBitmap();
-    // Restores screen as destination bitmap
-    orxDisplay_SetDestinationBitmaps(&pstScreen, 1);
-    // Restores screen bitmap clipping
-    orxDisplay_SetBitmapClipping(orxDisplay_GetScreenBitmap(), 0, 0, orxF2U(fb_width), orxF2U(fb_height));
-
-    // Render command lists
-    for (int n = 0; n < draw_data->CmdListsCount; n++)
+    if (draw_data != nullptr)
         {
-        const ImDrawList * cmd_list = draw_data->CmdLists[n];
-        const ImDrawVert * vtx_buffer = cmd_list->VtxBuffer.Data;
-        const ImDrawIdx * idx_buffer = cmd_list->IdxBuffer.Data;
+        orxVIEWPORT * pstViewport = (orxVIEWPORT *)pvViewport;
 
-        for (int cmd_i = 0; cmd_i < cmd_list->CmdBuffer.Size; cmd_i++)
+        // Avoid rendering when minimized, scale coordinates for retina displays (screen coordinates != framebuffer coordinates)
+        ImGuiIO& io = ImGui::GetIO();
+        int fb_width = (int)(io.DisplaySize.x * io.DisplayFramebufferScale.x);
+        int fb_height = (int)(io.DisplaySize.y * io.DisplayFramebufferScale.y);
+        if (fb_width == 0 || fb_height == 0)
+            return;
+        draw_data->ScaleClipRects(io.DisplayFramebufferScale);
+
+        // Gets screen bitmap
+        orxBITMAP * pstScreen = orxDisplay_GetScreenBitmap();
+        // Restores screen as destination bitmap
+        orxDisplay_SetDestinationBitmaps(&pstScreen, 1);
+        // Restores screen bitmap clipping
+        orxDisplay_SetBitmapClipping(orxDisplay_GetScreenBitmap(), 0, 0, orxF2U(fb_width), orxF2U(fb_height));
+
+        // Render command lists
+        for (int n = 0; n < draw_data->CmdListsCount; n++)
             {
-            const ImDrawCmd* pcmd = &cmd_list->CmdBuffer[cmd_i];
-            if (pcmd->UserCallback)
-                {
-                pcmd->UserCallback(cmd_list, pcmd);
-                }
-            else
-                {
-                orxCUSTOM_MESH customMesh = { 0 };
-                customMesh.pstBitmap = (orxBITMAP *)pcmd->TextureId;
-                customMesh.u32BitmapClipTLX = (int)pcmd->ClipRect.x;
-                customMesh.u32BitmapClipTLY = (int)(fb_height - pcmd->ClipRect.w);
-                customMesh.u32BitmapClipBRX = (int)(pcmd->ClipRect.z - pcmd->ClipRect.x);
-                customMesh.u32BitmapClipBRY = (int)(pcmd->ClipRect.w - pcmd->ClipRect.y);
-                customMesh.eSmoothing = orxDISPLAY_SMOOTHING_ON;
-                customMesh.eBlendMode = orxDISPLAY_BLEND_MODE_ALPHA;
-                customMesh.eDrawMode = orxDISPLAY_DRAW_MODE_TRIANGLES;
-                customMesh.u32VertexNumber = cmd_list->VtxBuffer.size();
-                customMesh.astVertexList = (orxDISPLAY_VERTEX *)vtx_buffer;
-                customMesh.u32IndexesCount = cmd_list->IdxBuffer.size();
-                customMesh.au16IndexList = idx_buffer;
-                customMesh.u32ElementCount = pcmd->ElemCount;
+            const ImDrawList * cmd_list = draw_data->CmdLists[n];
+            const ImDrawVert * vtx_buffer = cmd_list->VtxBuffer.Data;
+            const ImDrawIdx * idx_buffer = cmd_list->IdxBuffer.Data;
 
-                orxDisplay_DrawCustomMesh(&customMesh);
-                }
+            for (int cmd_i = 0; cmd_i < cmd_list->CmdBuffer.Size; cmd_i++)
+                {
+                const ImDrawCmd* pcmd = &cmd_list->CmdBuffer[cmd_i];
+                if (pcmd->UserCallback)
+                    {
+                    pcmd->UserCallback(cmd_list, pcmd);
+                    }
+                else
+                    {
+                    orxCUSTOM_MESH customMesh = { 0 };
+                    customMesh.pstBitmap = (orxBITMAP *)pcmd->TextureId;
+                    customMesh.u32BitmapClipTLX = (int)pcmd->ClipRect.x;
+                    customMesh.u32BitmapClipTLY = (int)(fb_height - pcmd->ClipRect.w);
+                    customMesh.u32BitmapClipBRX = (int)(pcmd->ClipRect.z - pcmd->ClipRect.x);
+                    customMesh.u32BitmapClipBRY = (int)(pcmd->ClipRect.w - pcmd->ClipRect.y);
+                    customMesh.eSmoothing = orxDISPLAY_SMOOTHING_ON;
+                    customMesh.eBlendMode = orxDISPLAY_BLEND_MODE_ALPHA;
+                    customMesh.eDrawMode = orxDISPLAY_DRAW_MODE_TRIANGLES;
+                    customMesh.u32VertexNumber = cmd_list->VtxBuffer.size();
+                    customMesh.astVertexList = (orxDISPLAY_VERTEX *)vtx_buffer;
+                    customMesh.u32IndexesCount = cmd_list->IdxBuffer.size();
+                    customMesh.au16IndexList = idx_buffer;
+                    customMesh.u32ElementCount = pcmd->ElemCount;
 
-            idx_buffer += pcmd->ElemCount;
+                    orxDisplay_DrawCustomMesh(&customMesh);
+                    }
+
+                idx_buffer += pcmd->ElemCount;
+                }
             }
         }
     }

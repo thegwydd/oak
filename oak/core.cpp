@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "core.h"
 
-
 //////////////////////////////////////////////////////////////////////////
 orxSTATUS orxFASTCALL oak_debug_callback(orxDEBUG_LEVEL _eLevel, const orxSTRING _zFunction, const orxSTRING _zFile, orxU32 _u32Line, const orxSTRING _zLog)
     {
@@ -27,6 +26,8 @@ namespace oak
         {
         orxDEBUG_SET_LOG_CALLBACK(oak_debug_callback);
 
+        TRACE_S_NFO("core", __FUNCTION__);
+
         // Initialize gui
         init_gui();
 
@@ -36,6 +37,11 @@ namespace oak
     //////////////////////////////////////////////////////////////////////////
     orxSTATUS core::run()
         {
+        ImGui_Orx_NewFrame();
+
+        m_resource_tree.render();
+
+        ImGui::Render();
 
         return orxSTATUS_SUCCESS;
         }
@@ -43,6 +49,7 @@ namespace oak
     //////////////////////////////////////////////////////////////////////////
     void core::exit()
         {
+        TRACE_S_NFO("core", __FUNCTION__);
         }
 
     //////////////////////////////////////////////////////////////////////////
