@@ -4,3 +4,6 @@
 [submodule "external/orx"]
 	path = external/orx
 	url = https://github.com/thegwydd/orx.git
+[submodule "external/spdlog"]
+	path = external/spdlog
+	url = https://github.com/gabime/spdlog.git
