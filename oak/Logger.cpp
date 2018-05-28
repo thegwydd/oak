@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "oak_logger.h"
+#include "Logger.h"
 
 #include <spdlog/sinks/stdout_sinks.h>
 #include <spdlog/sinks/msvc_sink.h>
@@ -13,32 +13,32 @@ namespace oak
 
 
     //////////////////////////////////////////////////////////////////////////
-    logger::logger()
+    Logger::Logger()
         {
         }
 
     //////////////////////////////////////////////////////////////////////////
-    logger::~logger()
+    Logger::~Logger()
         {
         }
 
     //////////////////////////////////////////////////////////////////////////
-    logger & logger::get()
+    Logger & Logger::Get()
         {
-        static logger * m_instance;
+        static Logger * m_instance;
         if (m_instance == nullptr)
-            m_instance = new logger;
+            m_instance = new Logger;
         return *m_instance;
         }
 
     //////////////////////////////////////////////////////////////////////////
-    log logger::get_log(const std::string & name)
+    log Logger::GetLog(const std::string & name)
         {
-        return logger::get().get_log_internal(name);
+        return Logger::Get().GetLogInternal(name);
         }
 
     //////////////////////////////////////////////////////////////////////////
-    log logger::get_log_internal(const std::string & name)
+    log Logger::GetLogInternal(const std::string & name)
         {
         log ret = m_loggers[name];
         if (ret == nullptr)

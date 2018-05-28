@@ -4,8 +4,8 @@
 
 #define LOGGER_NAMESPACE    oak
 
-#define DEFAULT_LOGGER      LOGGER_NAMESPACE::logger::get().get_log("main")
-#define SPECIFIC_LOGGER(x)  LOGGER_NAMESPACE::logger::get().get_log(x)
+#define DEFAULT_LOGGER      LOGGER_NAMESPACE::Logger::Get().GetLog("main")
+#define SPECIFIC_LOGGER(x)  LOGGER_NAMESPACE::Logger::Get().GetLog(x)
 
 #define DEFAULT_NUM_SLOTS   8192
 #define DEFAULT
@@ -45,18 +45,18 @@ namespace oak
     using log = std::shared_ptr<spdlog::logger>;
 
     //////////////////////////////////////////////////////////////////////////
-    class logger
+    class Logger
         {
         public:
-            logger();
-            ~logger();
+            Logger();
+            ~Logger();
 
         public:
-            static logger & get();
-            static log get_log(const std::string & name);
+            static Logger & Get();
+            static log GetLog(const std::string & name);
 
         private:
-            log get_log_internal(const std::string & name);
+            log GetLogInternal(const std::string & name);
 
         private:
             std::map<std::string, log> m_loggers;

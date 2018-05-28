@@ -1,40 +1,41 @@
 #pragma once
 
-#include "resource_tree.h"
+#include "MainWindow.h"
 
 namespace oak
     {
 
     //////////////////////////////////////////////////////////////////////////
-    class core
+    class Core
         {
         public:
-            core();
-            ~core();
+            Core();
+            ~Core();
 
         public:
-            static core & get()
+            static Core & Get()
                 {
-                static core * m_instance;
+                static Core * m_instance;
                 if (m_instance == nullptr)
-                    m_instance = new core;
+                    m_instance = new Core;
                 return *m_instance;
                 }
 
-            orxSTATUS init();
-            orxSTATUS run();
-            void exit();
+            orxSTATUS Init();
+            orxSTATUS Run();
+            void Exit();
 
         public:
-            oak::resource_tree & resource_tree() { return m_resource_tree; }
+            oak::Graph & Graph() { return m_graph; }
 
         private:
-            static orxSTATUS orxFASTCALL static_event_handler(const orxEVENT *_pstEvent) { return core::get().on_event(_pstEvent); }
-            void init_gui();
-            orxSTATUS on_event(const orxEVENT *_pstEvent);
+            static orxSTATUS orxFASTCALL StaticEventHandler(const orxEVENT *_pstEvent) { return Core::Get().OnEvent(_pstEvent); }
+            void InitGui();
+            orxSTATUS OnEvent(const orxEVENT *_pstEvent);
 
         private:
-            oak::resource_tree     m_resource_tree;
+            oak::Graph          m_graph;
+            oak::MainWindow     m_main_window;
 
         };
 

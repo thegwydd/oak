@@ -1,5 +1,6 @@
 #include "stdafx.h"
-#include "core.h"
+#include "Core.h"
+#include "imgui_dock.h"
 
 //////////////////////////////////////////////////////////////////////////
 orxSTATUS orxFASTCALL oak_debug_callback(orxDEBUG_LEVEL _eLevel, const orxSTRING _zFunction, const orxSTRING _zFile, orxU32 _u32Line, const orxSTRING _zLog)
@@ -12,48 +13,60 @@ namespace oak
     {
 
     //////////////////////////////////////////////////////////////////////////
-    core::core()
+    Core::Core() :
+        m_main_window(this, "oak - orx army knife")
         {
         }
 
     //////////////////////////////////////////////////////////////////////////
-    core::~core()
+    Core::~Core()
         {
         }
 
     //////////////////////////////////////////////////////////////////////////
-    orxSTATUS core::init()
+    orxSTATUS Core::Init()
         {
         orxDEBUG_SET_LOG_CALLBACK(oak_debug_callback);
 
-        TRACE_S_NFO("core", __FUNCTION__);
+        TRACE_S_NFO("Core", __FUNCTION__);
 
         // Initialize gui
-        init_gui();
+        InitGui();
+
+        ImGuiWindowFlags flags = 0;
+//         flags |= ImGuiWindowFlags_NoMove;
+//         flags |= ImGuiWindowFlags_NoResize;
+        flags |= ImGuiWindowFlags_NoTitleBar;
+        //        flags |= ImGuiWindowFlags_AlwaysAutoResize;
+
+        m_main_window.Flags(flags);
+        m_main_window.Position(ImVec2(0,0));
 
         return orxSTATUS_SUCCESS;
         }
 
     //////////////////////////////////////////////////////////////////////////
-    orxSTATUS core::run()
+    orxSTATUS Core::Run()
         {
+        m_main_window.Size(ImGui::GetIO().DisplaySize);
+
         ImGui_Orx_NewFrame();
 
-        m_resource_tree.render();
-
+        m_main_window.Render();
+            
         ImGui::Render();
 
         return orxSTATUS_SUCCESS;
         }
 
     //////////////////////////////////////////////////////////////////////////
-    void core::exit()
+    void Core::Exit()
         {
-        TRACE_S_NFO("core", __FUNCTION__);
+        TRACE_S_NFO("Core", __FUNCTION__);
         }
 
     //////////////////////////////////////////////////////////////////////////
-    void core::init_gui()
+    void Core::InitGui()
         {
         // Setup Dear ImGui binding
         IMGUI_CHECKVERSION();
@@ -65,33 +78,20 @@ namespace oak
         ImGui_Orx_Init();
 
         /* add events to manage */
-        orxEvent_AddHandler(orxEVENT_TYPE_RENDER, core::static_event_handler);
+        orxEvent_AddHandler(orxEVENT_TYPE_RENDER, Core::StaticEventHandler);
+        orxEvent_AddHandler(orxEVENT_TYPE_DISPLAY, Core::StaticEventHandler);
 
         // Setup style
         ImGui::StyleColorsDark();
         //ImGui::StyleColorsClassic();
 
-        // Load Fonts
-        // - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them. 
-        // - AddFontFromFileTTF() will return the ImFont* so you can store it if you need to select the font among multiple. 
-        // - If the file cannot be loaded, the function will return NULL. Please handle those errors in your core (e.g. use an assertion, or display an error and quit).
-        // - The fonts will be rasterized at a given size (w/ oversampling) and stored into a texture when calling ImFontAtlas::Build()/GetTexDataAsXXXX(), which ImGui_ImplXXXX_NewFrame below will call.
-        // - Read 'misc/fonts/README.txt' for more instructions and details.
-        // - Remember that in C/C++ if you want to include a backslash \ in a string literal you need to write a double backslash \\ !
-        //io.Fonts->AddFontDefault();
-        //io.Fonts->AddFontFromFileTTF("../../misc/fonts/Roboto-Medium.ttf", 16.0f);
-        //io.Fonts->AddFontFromFileTTF("../../misc/fonts/Cousine-Regular.ttf", 15.0f);
-        //io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 16.0f);
-        //io.Fonts->AddFontFromFileTTF("../../misc/fonts/ProggyTiny.ttf", 10.0f);
-        //ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
-        //IM_ASSERT(font != NULL);
-         
-        m_resource_tree.rebuild();
+        ImGui::InitDock();
 
+        m_graph.Rebuild();
         }
 
     //////////////////////////////////////////////////////////////////////////
-    orxSTATUS core::on_event(const orxEVENT *_pstEvent)
+    orxSTATUS Core::OnEvent(const orxEVENT *_pstEvent)
         {
         switch (_pstEvent->eType)
             {
@@ -102,6 +102,9 @@ namespace oak
                     ImGui_Orx_Render(NULL, ImGui::GetDrawData());
                 }
                 break;
+
+            case orxEVENT_TYPE_DISPLAY:
+                m_main_window.Size(ImGui::GetIO().DisplaySize);
 
             default:
                 break;

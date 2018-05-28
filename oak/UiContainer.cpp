@@ -1,25 +1,25 @@
 #include "stdafx.h"
-#include "oak.h"
-#include "core.h"
+#include "UiContainer.h"
 
-
-extern "C"
+namespace oak
     {
+
     //////////////////////////////////////////////////////////////////////////
-    OAK_API orxSTATUS /*orxFASTCALL*/ oak_init()
+    UiContainer::UiContainer(Core * core, const std::string & _name) : UiControl(core, _name)
         {
-        return oak::Core::Get().Init();
+        }
+
+
+    //////////////////////////////////////////////////////////////////////////
+    UiContainer::~UiContainer()
+        {
         }
 
     //////////////////////////////////////////////////////////////////////////
-    OAK_API orxSTATUS /*orxFASTCALL*/ oak_run()
+    void UiContainer::Render()
         {
-        return oak::Core::Get().Run();
+        for (auto control : m_controls)
+            control->Render();
         }
 
-    //////////////////////////////////////////////////////////////////////////
-    OAK_API void /*orxFASTCALL*/ oak_exit()
-        {
-        oak::Core::Get().Exit();
-        }
     }

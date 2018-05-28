@@ -1,5 +1,6 @@
 #include "stdafx.h"
-#include "string_utility.h"
+#include "StringUtility.h"
+
 #include <sstream>
 #include <iomanip>
 #include <stdarg.h>

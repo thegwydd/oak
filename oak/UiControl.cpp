@@ -1,17 +1,18 @@
 #include "stdafx.h"
-#include "ui_component.h"
+#include "UiControl.h"
 
 namespace oak
     {
 
     //////////////////////////////////////////////////////////////////////////
-    ui_component::ui_component(const std::string & _name) :
+    UiControl::UiControl(Core * core, const std::string & _name) :
+        m_core(core),
         m_name(_name)
         {
         }
             
     //////////////////////////////////////////////////////////////////////////
-    ui_component::~ui_component()
+    UiControl::~UiControl()
         {
         }
 
