@@ -33,6 +33,8 @@ namespace oak
             ~ResourceTree();
 
         public:
+            virtual bool Initialize() override { return true; }
+            virtual void Deinitialize() override {}
             virtual void Render() override;
             virtual void OnGraphEvent(GraphEvent evt, GraphNode::Ptr node) override;
 

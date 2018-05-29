@@ -29,9 +29,6 @@
     <ClInclude Include="GraphNode.h">
       <Filter>core</Filter>
     </ClInclude>
-    <ClInclude Include="ResourceTree.h">
-      <Filter>core</Filter>
-    </ClInclude>
     <ClInclude Include="Event.h">
       <Filter>common</Filter>
     </ClInclude>
@@ -47,7 +44,18 @@
     <ClInclude Include="imgui_dock.h">
       <Filter>imgui_orx</Filter>
     </ClInclude>
-    <ClInclude Include="MainWindow.h" />
+    <ClInclude Include="ViewportControl.h">
+      <Filter>core\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="MainWindow.h">
+      <Filter>core\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="InspectorControl.h">
+      <Filter>core\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceTree.h">
+      <Filter>core\ui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="imgui_impl_orx.cpp">
@@ -72,9 +80,6 @@
     <ClCompile Include="GraphNode.cpp">
       <Filter>core</Filter>
     </ClCompile>
-    <ClCompile Include="ResourceTree.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
     <ClCompile Include="UiContainer.cpp">
       <Filter>core\ui</Filter>
     </ClCompile>
@@ -87,7 +92,18 @@
     <ClCompile Include="imgui_dock.cpp">
       <Filter>imgui_orx</Filter>
     </ClCompile>
-    <ClCompile Include="MainWindow.cpp" />
+    <ClCompile Include="ViewportControl.cpp">
+      <Filter>core\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="MainWindow.cpp">
+      <Filter>core\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="InspectorControl.cpp">
+      <Filter>core\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceTree.cpp">
+      <Filter>core\ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui_orx">

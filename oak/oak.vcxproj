@@ -201,6 +201,7 @@ copy /Y "$(ProjectDir)*.ini" "$(SolutionDir)bin\$(Configuration)\"</Command>
     <ClInclude Include="imgui_dock.h" />
     <ClInclude Include="imgui_impl_orx.h" />
     <ClInclude Include="Core.h" />
+    <ClInclude Include="InspectorControl.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="oak.h" />
     <ClInclude Include="Logger.h" />
@@ -212,6 +213,7 @@ copy /Y "$(ProjectDir)*.ini" "$(SolutionDir)bin\$(Configuration)\"</Command>
     <ClInclude Include="UiControl.h" />
     <ClInclude Include="UiContainer.h" />
     <ClInclude Include="UiWindow.h" />
+    <ClInclude Include="ViewportControl.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GraphNode.cpp" />
@@ -226,6 +228,7 @@ copy /Y "$(ProjectDir)*.ini" "$(SolutionDir)bin\$(Configuration)\"</Command>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">/Zc:strictStrings-</AdditionalOptions>
     </ClCompile>
     <ClCompile Include="Core.cpp" />
+    <ClCompile Include="InspectorControl.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="oak.cpp" />
     <ClCompile Include="Logger.cpp" />
@@ -241,6 +244,7 @@ copy /Y "$(ProjectDir)*.ini" "$(SolutionDir)bin\$(Configuration)\"</Command>
     <ClCompile Include="UiControl.cpp" />
     <ClCompile Include="UiContainer.cpp" />
     <ClCompile Include="UiWindow.cpp" />
+    <ClCompile Include="ViewportControl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="oak.ini" />

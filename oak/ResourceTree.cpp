@@ -23,10 +23,10 @@ namespace oak
         GraphNodeList & nodes = m_core->Graph().Nodes();
         if (nodes.size())
             {
-            ImGui::Text("W:%d, H:%d", (int)m_size.x, (int)m_size.y);
+            ImGui::Text("Hierarchy");
 
             GraphNode::Ptr root_node = *nodes.begin();
-            if (ImGui::TreeNode(root_node->Name().c_str()))
+            if (ImGui::TreeNodeEx(root_node->Name().c_str(), ImGuiTreeNodeFlags_DefaultOpen))
                 {
                 ImGui::PushStyleVar(ImGuiStyleVar_IndentSpacing, ImGui::GetFontSize() * 2); // Increase spacing to differentiate leaves from expanded contents.
                 ShowNodeList(root_node->Children());
@@ -104,7 +104,11 @@ namespace oak
         if (ImGui::TreeNodeEx((void*)(intptr_t)node.get(), node_flags, node->Name().c_str()))
             {
             if (ImGui::IsItemClicked())
+                {
+                if (m_selected != node)
+                    m_core->SelectedNode(node);
                 m_selected = node;
+                }
 
             const GraphNodeList & children = node->Children();
 

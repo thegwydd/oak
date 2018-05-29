@@ -22,6 +22,8 @@ orxSTATUS application::init()
     // setup event handler to resize viewport    
     orxEvent_AddHandler(orxEVENT_TYPE_DISPLAY, application::static_event_handler);
 
+    orxViewport_Enable(m_main_viewport, orxFALSE);
+
     oak_init();
 
     return orxSTATUS_SUCCESS;

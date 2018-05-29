@@ -12,6 +12,8 @@ namespace oak
             ~UiWindow();
 
         public:
+            virtual bool Initialize() override { return true; };
+            virtual void Deinitialize() override {};
             virtual void Render() override;
 
         };

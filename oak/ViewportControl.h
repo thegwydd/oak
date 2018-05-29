@@ -2,28 +2,26 @@
 
 #include "UiWindow.h"
 #include "ResourceTree.h"
-#include "InspectorControl.h"
-#include "ViewportControl.h"
 
 namespace oak
     {
 
 
     //////////////////////////////////////////////////////////////////////////
-    class MainWindow : public UiWindow
+    class ViewportControl : public UiControl
         {
         public:
-            MainWindow(Core * core, const std::string & _name);
-            ~MainWindow();
+            ViewportControl(Core * core);
+            ~ViewportControl();
 
             virtual bool Initialize() override;
             virtual void Deinitialize() override;
             virtual void Render() override;
 
         protected:
-            ResourceTree        m_resource_tree;
-            InspectorControl    m_inspector;
-            ViewportControl     m_viewport;
+            orxVIEWPORT *   m_viewport;
+            orxCAMERA *     m_camera;
+
         };
 
 

@@ -5,6 +5,7 @@
 //////////////////////////////////////////////////////////////////////////
 orxSTATUS orxFASTCALL oak_debug_callback(orxDEBUG_LEVEL _eLevel, const orxSTRING _zFunction, const orxSTRING _zFile, orxU32 _u32Line, const orxSTRING _zLog)
     {
+    OutputDebugString(_zLog);
     return orxSTATUS_SUCCESS;
     }
 
@@ -32,15 +33,20 @@ namespace oak
 
         // Initialize gui
         InitGui();
+        
+        orxConfig_Load("oak.ini");
 
         ImGuiWindowFlags flags = 0;
-//         flags |= ImGuiWindowFlags_NoMove;
-//         flags |= ImGuiWindowFlags_NoResize;
+        flags |= ImGuiWindowFlags_NoMove;
+        flags |= ImGuiWindowFlags_NoResize;
         flags |= ImGuiWindowFlags_NoTitleBar;
-        //        flags |= ImGuiWindowFlags_AlwaysAutoResize;
+        flags |= ImGuiWindowFlags_AlwaysAutoResize;
+
+        m_main_window.Initialize();
 
         m_main_window.Flags(flags);
         m_main_window.Position(ImVec2(0,0));
+        m_main_window.Alpha(0);
 
         return orxSTATUS_SUCCESS;
         }
@@ -52,6 +58,8 @@ namespace oak
 
         ImGui_Orx_NewFrame();
 
+        //ImGui::ShowDemoWindow();
+
         m_main_window.Render();
             
         ImGui::Render();
@@ -62,6 +70,8 @@ namespace oak
     //////////////////////////////////////////////////////////////////////////
     void Core::Exit()
         {
+        m_main_window.Deinitialize();
+
         TRACE_S_NFO("Core", __FUNCTION__);
         }
 
@@ -73,6 +83,9 @@ namespace oak
 
         /* create the gui context */
         ImGui::CreateContext();
+
+        /* avoid loadin/storing to/from imgui.ini*/
+        ImGui::GetIO().IniFilename = NULL;
 
         /* initialize the gui port */
         ImGui_Orx_Init();
@@ -105,6 +118,7 @@ namespace oak
 
             case orxEVENT_TYPE_DISPLAY:
                 m_main_window.Size(ImGui::GetIO().DisplaySize);
+                break;
 
             default:
                 break;

@@ -4,7 +4,6 @@
 
 namespace oak
     {
-
     //////////////////////////////////////////////////////////////////////////
     class Core
         {
@@ -25,6 +24,10 @@ namespace oak
             orxSTATUS Run();
             void Exit();
 
+            void SelectedNode(oak::GraphNode::Ptr node) { m_selected_node = node; };
+            oak::GraphNode::Ptr SelectedNode() { return m_selected_node; };
+
+
         public:
             oak::Graph & Graph() { return m_graph; }
 
@@ -36,7 +39,7 @@ namespace oak
         private:
             oak::Graph          m_graph;
             oak::MainWindow     m_main_window;
-
+            oak::GraphNode::Ptr m_selected_node;
         };
 
     }

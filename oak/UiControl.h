@@ -15,6 +15,8 @@ namespace oak
             virtual ~UiControl();
 
         public:
+            virtual bool Initialize() = 0;
+            virtual void Deinitialize() = 0;
             virtual void Render() = 0;
 
         public:

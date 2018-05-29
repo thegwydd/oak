@@ -12,6 +12,8 @@ namespace oak
             ~UiContainer();
 
         public:
+            virtual bool Initialize() override { return true; };
+            virtual void Deinitialize() override {};
             virtual void Render() override;
             UiControls & Controls() { return m_controls; }
 
