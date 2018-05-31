@@ -48,6 +48,9 @@ namespace oak
         m_main_window.Position(ImVec2(0,0));
         m_main_window.Alpha(0);
 
+        // build the graph
+        m_graph.Rebuild();
+
         return orxSTATUS_SUCCESS;
         }
 
@@ -99,8 +102,6 @@ namespace oak
         //ImGui::StyleColorsClassic();
 
         ImGui::InitDock();
-
-        m_graph.Rebuild();
         }
 
     //////////////////////////////////////////////////////////////////////////
@@ -126,6 +127,74 @@ namespace oak
 
         return orxSTATUS_SUCCESS;
         }
+
+
+    //////////////////////////////////////////////////////////////////////////
+    void Core::OnCreateNewDirectory(GraphNode::Ptr node)
+        {
+
+        }
+
+    //////////////////////////////////////////////////////////////////////////
+    void Core::OnRenameDirectory(GraphNode::Ptr node)
+        {
+
+        }
+
+    //////////////////////////////////////////////////////////////////////////
+    void Core::OnDeleteDirectory(GraphNode::Ptr node)
+        {
+
+        }
+
+    //////////////////////////////////////////////////////////////////////////
+    void Core::OnRenameFile(GraphNode::Ptr node)
+        {
+
+        }
+
+    //////////////////////////////////////////////////////////////////////////
+    void Core::OnDeleteFile(GraphNode::Ptr node)
+        {
+
+        }
+
+    //////////////////////////////////////////////////////////////////////////
+    void Core::OnRenameInclude(GraphNode::Ptr node)
+        {
+
+        }
+
+    //////////////////////////////////////////////////////////////////////////
+    void Core::OnDeleteInclude(GraphNode::Ptr node)
+        {
+
+        }
+
+    //////////////////////////////////////////////////////////////////////////
+    void Core::OnCreateSection(GraphNode::Ptr node, EditorType type)
+        {
+
+        }
+
+    //////////////////////////////////////////////////////////////////////////
+    void Core::OnEditSectionAs(GraphNode::Ptr node, EditorType type)
+        {
+
+        }
+
+    //////////////////////////////////////////////////////////////////////////
+    void Core::OnRenameSection(GraphNode::Ptr node)
+        {
+
+        }
+
+    //////////////////////////////////////////////////////////////////////////
+    void Core::OnDeleteSection(GraphNode::Ptr node)
+        {
+
+        }
+
 
 
     }

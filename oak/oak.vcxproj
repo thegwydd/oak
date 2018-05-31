@@ -195,6 +195,8 @@ copy /Y "$(ProjectDir)*.ini" "$(SolutionDir)bin\$(Configuration)\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="EditorFatory.h" />
+    <ClInclude Include="Editors.h" />
     <ClInclude Include="EnumUtility.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="GraphNode.h" />
@@ -208,17 +210,19 @@ copy /Y "$(ProjectDir)*.ini" "$(SolutionDir)bin\$(Configuration)\"</Command>
     <ClInclude Include="Logger.h" />
     <ClInclude Include="OrxIni.h" />
     <ClInclude Include="ResourceTree.h" />
-    <ClInclude Include="SectionEditors.h" />
     <ClInclude Include="SelectorWindow.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="StringUtility.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="UiControl.h" />
     <ClInclude Include="UiContainer.h" />
+    <ClInclude Include="UiEditor.h" />
     <ClInclude Include="UiWindow.h" />
     <ClInclude Include="ViewportControl.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="EditorFatory.cpp" />
+    <ClCompile Include="Editors.cpp" />
     <ClCompile Include="GraphNode.cpp" />
     <ClCompile Include="imgui_dock.cpp" />
     <ClCompile Include="imgui_impl_orx.cpp">
@@ -238,7 +242,6 @@ copy /Y "$(ProjectDir)*.ini" "$(SolutionDir)bin\$(Configuration)\"</Command>
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="OrxIni.cpp" />
     <ClCompile Include="ResourceTree.cpp" />
-    <ClCompile Include="SectionEditors.cpp" />
     <ClCompile Include="SelectorWindow.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -249,6 +252,7 @@ copy /Y "$(ProjectDir)*.ini" "$(SolutionDir)bin\$(Configuration)\"</Command>
     <ClCompile Include="StringUtility.cpp" />
     <ClCompile Include="UiControl.cpp" />
     <ClCompile Include="UiContainer.cpp" />
+    <ClCompile Include="UiEditor.cpp" />
     <ClCompile Include="UiWindow.cpp" />
     <ClCompile Include="ViewportControl.cpp" />
   </ItemGroup>

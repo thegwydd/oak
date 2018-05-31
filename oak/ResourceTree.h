@@ -15,11 +15,13 @@ namespace oak
     struct MenuItem
         {
         MenuItem() : MenuItem("") {};
-        MenuItem(const std::string t, MenuCallback cb = nullptr) : m_text(t), m_callback(cb) {};
+        MenuItem(const std::string t, MenuCallback cb = nullptr, std::list<MenuItem> subitems = {}) : m_text(t), m_callback(cb), m_subitems(subitems) {};
         virtual ~MenuItem() {};
 
         std::string         m_text;
         MenuCallback        m_callback;
+
+        std::list<MenuItem> m_subitems;
         };
 
     using MenuItems = std::list<MenuItem>;
@@ -29,9 +31,10 @@ namespace oak
         {
         using Ptr = std::shared_ptr<TreeVisualState>;
 
-        TreeVisualState(bool opened, ImGuiTreeNodeFlags flags = 0) :
+        TreeVisualState(bool opened, ImGuiTreeNodeFlags flags = 0, MenuItems mi = MenuItems()) :
             m_opened(opened),
-            m_flags(flags)
+            m_flags(flags),
+            m_menu_items(mi)
             {}
         virtual ~TreeVisualState() {}
 
@@ -49,17 +52,21 @@ namespace oak
             ~ResourceTree();
 
         public:
-            virtual bool Initialize() override { return true; }
-            virtual void Deinitialize() override {}
+            virtual bool Initialize() override;
+            virtual void Deinitialize() override;
             virtual void Render() override;
             virtual void OnGraphEvent(GraphEvent evt, GraphNode::Ptr node) override;
 
         private:
             void ShowNodeList(const GraphNodeList & nodes);
             void ShowNode(GraphNode::Ptr node);
+            void ShowMenu(GraphNode::Ptr node, MenuItem & item);
 
         private:
             GraphNode::Ptr      m_selected = nullptr;
+
+            using MenuMap = std::map<NodeType, MenuItems>;
+            MenuMap             m_menu_map;
 
         };
 

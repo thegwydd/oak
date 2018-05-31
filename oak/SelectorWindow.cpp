@@ -8,7 +8,7 @@ namespace oak
 
     //////////////////////////////////////////////////////////////////////////
     SelectorWindow::SelectorWindow(Core * core) : 
-        UiWindow(core, "Selector"),
+        UiEditor(core, "Selector"),
         m_resource_tree(core),
         m_inspector(core)
         {

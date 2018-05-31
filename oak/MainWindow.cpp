@@ -9,8 +9,8 @@ namespace oak
     //////////////////////////////////////////////////////////////////////////
     MainWindow::MainWindow(Core * core, const std::string & _name) : 
         UiWindow(core, _name),
-        m_selector(core),
-        m_viewport(core)
+        m_viewport(core),
+        m_current_editor(nullptr)
         {
         }
 
@@ -22,16 +22,35 @@ namespace oak
     //////////////////////////////////////////////////////////////////////////
     bool MainWindow::Initialize()
         {
-        bool ret = m_selector.Initialize();
+        bool ret = true;
+        
+        for (int a = 0; a < (uint32_t)EditorType::EndOfEnum; ++a)
+            {
+            m_editors[a] = EditorFactory::CreateEditor(m_core, (EditorType)a);
+            if (m_editors[a])
+                ret = m_editors[a]->Initialize();
+            if (!ret)
+                break;
+            }
+
         if (ret)
             ret = m_viewport.Initialize();
+
+        // set the current editor
+        m_current_editor = m_editors[(int)EditorType::Selector];
+
         return ret;
         }
     
     //////////////////////////////////////////////////////////////////////////
     void MainWindow::Deinitialize()
         {
-        m_selector.Deinitialize();
+        for (int a = 0; a < (uint32_t)EditorType::EndOfEnum; ++a)
+            {
+            if (m_editors[a])
+                m_editors[a]->Deinitialize();
+            }
+
         m_viewport.Deinitialize();
         }
 
@@ -48,6 +67,18 @@ namespace oak
             ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, last_size);
             
             ImGui::BeginChild("Editor", ImVec2(m_LeftPaneWidth, m_LeftPaneHeight), true, ImGuiWindowFlags_HorizontalScrollbar);
+
+            // navigation buttons
+            if (m_editors[(int)EditorType::Selector])
+                {
+                if ((m_current_editor != nullptr) && (m_current_editor == m_editors[(int)EditorType::Selector]))
+                    {
+                    if (ImGui::Button("Back", ImVec2(-1, 0)))
+                        m_current_editor = m_editors[(int)EditorType::Selector];
+                    }
+                }
+
+            // render the current editor
             RenderLeftPane();
             ImGui::EndChild();
             
@@ -76,8 +107,11 @@ namespace oak
     //////////////////////////////////////////////////////////////////////////
     void MainWindow::RenderLeftPane()
         {
-        m_selector.Size(ImVec2(m_LeftPaneWidth, 0));
-        m_selector.Render();
+        if (m_current_editor != nullptr)
+            {
+            m_current_editor->Size(ImVec2(m_LeftPaneWidth, 0));
+            m_current_editor->Render();
+            }
         }
 
 

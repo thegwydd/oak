@@ -27,7 +27,20 @@ namespace oak
             void SelectedNode(oak::GraphNode::Ptr node) { m_selected_node = node; };
             oak::GraphNode::Ptr SelectedNode() { return m_selected_node; };
 
+            void OnCreateNewDirectory(GraphNode::Ptr node);
+            void OnRenameDirectory(GraphNode::Ptr node);
+            void OnDeleteDirectory(GraphNode::Ptr node);
 
+            void OnRenameFile(GraphNode::Ptr node);
+            void OnDeleteFile(GraphNode::Ptr node);
+
+            void OnRenameInclude(GraphNode::Ptr node);
+            void OnDeleteInclude(GraphNode::Ptr node);
+
+            void OnCreateSection(GraphNode::Ptr node, EditorType type);
+            void OnEditSectionAs(GraphNode::Ptr node, EditorType type);
+            void OnRenameSection(GraphNode::Ptr node);
+            void OnDeleteSection(GraphNode::Ptr node);
 
         public:
             oak::Graph & Graph() { return m_graph; }

@@ -44,24 +44,32 @@
     <ClInclude Include="imgui_dock.h">
       <Filter>imgui_orx</Filter>
     </ClInclude>
-    <ClInclude Include="ViewportControl.h">
-      <Filter>core\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="MainWindow.h">
-      <Filter>core\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="InspectorControl.h">
-      <Filter>core\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceTree.h">
-      <Filter>core\ui</Filter>
-    </ClInclude>
     <ClInclude Include="NodeTypes.h">
       <Filter>core</Filter>
     </ClInclude>
-    <ClInclude Include="SectionEditors.h" />
     <ClInclude Include="SelectorWindow.h">
+      <Filter>core\ui\Editors\Selector</Filter>
+    </ClInclude>
+    <ClInclude Include="InspectorControl.h">
+      <Filter>core\ui\Editors\Selector</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceTree.h">
+      <Filter>core\ui\Editors\Selector</Filter>
+    </ClInclude>
+    <ClInclude Include="MainWindow.h">
+      <Filter>core\ui\MainWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewportControl.h">
+      <Filter>core\ui\MainWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="UiEditor.h">
       <Filter>core\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorFatory.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="Editors.h">
+      <Filter>core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -99,24 +107,32 @@
     <ClCompile Include="imgui_dock.cpp">
       <Filter>imgui_orx</Filter>
     </ClCompile>
-    <ClCompile Include="ViewportControl.cpp">
-      <Filter>core\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="MainWindow.cpp">
-      <Filter>core\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="InspectorControl.cpp">
-      <Filter>core\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceTree.cpp">
-      <Filter>core\ui</Filter>
-    </ClCompile>
     <ClCompile Include="NodeTypes.cpp">
       <Filter>core</Filter>
     </ClCompile>
-    <ClCompile Include="SectionEditors.cpp" />
     <ClCompile Include="SelectorWindow.cpp">
+      <Filter>core\ui\Editors\Selector</Filter>
+    </ClCompile>
+    <ClCompile Include="InspectorControl.cpp">
+      <Filter>core\ui\Editors\Selector</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceTree.cpp">
+      <Filter>core\ui\Editors\Selector</Filter>
+    </ClCompile>
+    <ClCompile Include="MainWindow.cpp">
+      <Filter>core\ui\MainWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewportControl.cpp">
+      <Filter>core\ui\MainWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="UiEditor.cpp">
       <Filter>core\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorFatory.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="Editors.cpp">
+      <Filter>core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -131,6 +147,15 @@
     </Filter>
     <Filter Include="core\ui">
       <UniqueIdentifier>{81640b0f-8d0c-49ac-934c-67b048d658cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\ui\MainWindow">
+      <UniqueIdentifier>{703fb70a-3dbc-4ac0-9bc0-37791b9d5654}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\ui\Editors">
+      <UniqueIdentifier>{9e06a58b-30e3-49e0-bdba-e47374360902}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\ui\Editors\Selector">
+      <UniqueIdentifier>{f28cc7a3-555f-4425-81c0-7f2f04f1ef92}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,7 @@
 #include "UiWindow.h"
 #include "SelectorWindow.h"
 #include "ViewportControl.h"
+#include "EditorFatory.h"
 
 namespace oak
     {
@@ -23,7 +24,6 @@ namespace oak
             void RenderLeftPane();
 
         protected:
-            SelectorWindow      m_selector;
             ViewportControl     m_viewport;
 
             float               m_LeftPaneWidth = 300;
@@ -31,6 +31,8 @@ namespace oak
 
             float               m_SplitterSize = 8.0f;
 
+            UiEditor::Ptr       m_editors[(uint32_t)EditorType::EndOfEnum];
+            UiEditor::Ptr       m_current_editor;
         };
 
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "UiWindow.h"
+#include "UiEditor.h"
 #include "ResourceTree.h"
 #include "InspectorControl.h"
 #include "ViewportControl.h"
@@ -10,7 +10,7 @@ namespace oak
 
 
     //////////////////////////////////////////////////////////////////////////
-    class SelectorWindow : public UiWindow
+    class SelectorWindow : public UiEditor
         {
         public:
             SelectorWindow(Core * core);
