@@ -9,9 +9,8 @@ namespace oak
     //////////////////////////////////////////////////////////////////////////
     MainWindow::MainWindow(Core * core, const std::string & _name) : 
         UiWindow(core, _name),
-        m_resource_tree(core),
-        m_viewport(core),
-        m_inspector(core)
+        m_selector(core),
+        m_viewport(core)
         {
         }
 
@@ -23,9 +22,7 @@ namespace oak
     //////////////////////////////////////////////////////////////////////////
     bool MainWindow::Initialize()
         {
-        bool ret = m_resource_tree.Initialize();
-        if (ret)
-            ret = m_inspector.Initialize();
+        bool ret = m_selector.Initialize();
         if (ret)
             ret = m_viewport.Initialize();
         return ret;
@@ -34,8 +31,7 @@ namespace oak
     //////////////////////////////////////////////////////////////////////////
     void MainWindow::Deinitialize()
         {
-        m_resource_tree.Deinitialize();
-        m_inspector.Deinitialize();
+        m_selector.Deinitialize();
         m_viewport.Deinitialize();
         }
 
@@ -47,41 +43,41 @@ namespace oak
         ImGui::SetNextWindowSizeConstraints(m_size, m_size);
         if (ImGui::Begin(m_name.c_str(), nullptr, m_size, m_alpha, m_flags))
             {
-            static float w = 200.0f;
-            static float h = m_size.y;
+            ImVec2 last_size = ImVec2(0, 0);
+
+            ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, last_size);
             
-            ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 0));
-            
-            ImGui::BeginChild("Hierarchy", ImVec2(w, h), true, ImGuiWindowFlags_HorizontalScrollbar);
-            m_resource_tree.Render();
-            m_inspector.Render();
+            ImGui::BeginChild("Editor", ImVec2(m_LeftPaneWidth, m_LeftPaneHeight), true, ImGuiWindowFlags_HorizontalScrollbar);
+            RenderLeftPane();
             ImGui::EndChild();
             
             ImGui::SameLine();
-            
-            ImGui::InvisibleButton("vsplitter", ImVec2(8.0f, h));
+
+            ImGui::InvisibleButton("vsplitter", ImVec2(m_SplitterSize, m_LeftPaneHeight));
             if (ImGui::IsItemActive())
-                w += ImGui::GetIO().MouseDelta.x;
+                m_LeftPaneWidth += ImGui::GetIO().MouseDelta.x;
             
             ImGui::SameLine();
             
-            ImGui::BeginChild("Viewport", ImVec2(0, h), true);
+            last_size = ImVec2(0, m_LeftPaneHeight);
+            ImGui::BeginChild("Viewport", last_size, true);
+            m_viewport.Position(ImGui::GetWindowPos());
+            m_viewport.Size(ImGui::GetWindowSize());
             m_viewport.Render();
             ImGui::EndChild();
 
-/*  third at the bottom
-            ImGui::InvisibleButton("hsplitter", ImVec2(-1, 8.0f));
-            if (ImGui::IsItemActive())
-                h += ImGui::GetIO().MouseDelta.y;
-
-            ImGui::BeginChild("Dunno", ImVec2(0, 0), true);
-            ImGui::EndChild();
-
-*/
             ImGui::PopStyleVar();
            }
         ImGui::End();
 
+        }
+
+
+    //////////////////////////////////////////////////////////////////////////
+    void MainWindow::RenderLeftPane()
+        {
+        m_selector.Size(ImVec2(m_LeftPaneWidth, 0));
+        m_selector.Render();
         }
 
 

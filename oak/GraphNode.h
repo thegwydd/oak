@@ -21,23 +21,6 @@ namespace oak
     DECLARE_ENUM_ENTRY(NodeType);
 
     //////////////////////////////////////////////////////////////////////////
-    enum class NodeFileType
-        {
-        not_a_file,
-        unknown,
-        config,
-        script,
-        image,
-        sound,
-        shader,
-        executable,
-        library,
-        font,
-        };
-
-    DECLARE_ENUM_ENTRY(NodeFileType);
-
-    //////////////////////////////////////////////////////////////////////////
     enum class GraphEvent
         {
         add,
@@ -68,7 +51,6 @@ namespace oak
 
         public:
             GraphNode(const std::string & n = "", NodeType t = NodeType::unknown);
-            GraphNode(const std::string & n, const std::string & desc, NodeType t);
             virtual ~GraphNode();
 
         public:
@@ -78,12 +60,6 @@ namespace oak
             const std::string & Name() const { return m_name; }
             void Name(const std::string & n) { m_name = n; }
 
-            const NodeFileType & FileType() const { return m_file_type; }
-            void FileType(NodeFileType n) { m_file_type = n; }
-
-            const std::string & Description() const { return m_description; }
-            void Description(const std::string & n) { m_description = n; }
-
             const GraphNodeList & Children() const { return m_children; }
             void AddChild(GraphNode::Ptr n) { m_children.push_back(n); }
 
@@ -92,13 +68,10 @@ namespace oak
 
         protected:
             std::string         m_name;
-            std::string         m_description;
             NodeType            m_type;
-            NodeFileType        m_file_type;
             GraphNodeList       m_children;
             VisualState::Ptr    m_visual_state;
         };
-
 
     //////////////////////////////////////////////////////////////////////////
     class IGraphListener

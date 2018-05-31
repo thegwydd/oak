@@ -1,7 +1,11 @@
 #include "stdafx.h"
 #include "InspectorControl.h"
 #include "Core.h"
-    
+#include "NodeTypes.h"
+#include <imgui_internal.h>
+
+#include <memory>
+
 namespace oak
     {
 
@@ -33,9 +37,10 @@ namespace oak
     void InspectorControl::Render()
         {
         oak::GraphNode::Ptr node = m_core->SelectedNode();
-        if (node)
+        if (node && node->Type() == NodeType::section)
             {
-            ImGui::Text(node->Name().c_str());
+            SectionNode::Ptr snode = dynamic_pointer_cast<SectionNode>(node);
+            ImGui::Text(snode->Name().c_str());
 
             ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 2));
             ImGui::Columns(2);
@@ -45,31 +50,20 @@ namespace oak
                 {
                 if (child_node->Type() == NodeType::property)
                     {
-                    ImGui::PushID(child_node.get());   // Use object uid as identifier. Most commonly you could also use the object pointer as a base ID.
+                    PropertyNode::Ptr pnode = dynamic_pointer_cast<PropertyNode>(child_node);
+
+                    ImGui::PushID(pnode.get());   // Use object uid as identifier. Most commonly you could also use the object pointer as a base ID.
                     ImGui::AlignTextToFramePadding();  // Text and Tree nodes are less high than regular widgets, here we add vertical spacing to make the tree lines equal high.
-                    bool node_open = ImGui::TreeNode("Object", child_node->Name().c_str());
+
+                    ImGui::Text(pnode->Name().c_str());
+
                     ImGui::NextColumn();
                     ImGui::AlignTextToFramePadding();
-                    ImGui::Text("Values");
+
+                    ImGui::Text(pnode->Value().c_str());
+
                     ImGui::NextColumn();
-                    if (node_open)
-                        {
-                        ImGui::PushID(0); // Use field index as identifier.
 
-                        // Here we use a TreeNode to highlight on hover (we could use e.g. Selectable as well)
-                        ImGui::AlignTextToFramePadding();
-                        ImGui::TreeNodeEx("Field", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_Bullet, "Field_%d", 0);
-                        ImGui::NextColumn();
-                        ImGui::PushItemWidth(-1);
-                        ImGui::Text("value!");
-
-                        ImGui::PopItemWidth();
-                        ImGui::NextColumn();
-
-                        ImGui::PopID();
-
-                        ImGui::TreePop();
-                        }
                     ImGui::PopID();
                     }
                 }

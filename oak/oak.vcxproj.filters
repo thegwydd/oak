@@ -56,6 +56,13 @@
     <ClInclude Include="ResourceTree.h">
       <Filter>core\ui</Filter>
     </ClInclude>
+    <ClInclude Include="NodeTypes.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="SectionEditors.h" />
+    <ClInclude Include="SelectorWindow.h">
+      <Filter>core\ui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="imgui_impl_orx.cpp">
@@ -102,6 +109,13 @@
       <Filter>core\ui</Filter>
     </ClCompile>
     <ClCompile Include="ResourceTree.cpp">
+      <Filter>core\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeTypes.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="SectionEditors.cpp" />
+    <ClCompile Include="SelectorWindow.cpp">
       <Filter>core\ui</Filter>
     </ClCompile>
   </ItemGroup>

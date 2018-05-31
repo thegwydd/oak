@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "ResourceTree.h"
 #include "Core.h"
+#include "NodeTypes.h"
 
 namespace oak
     {
@@ -24,14 +25,11 @@ namespace oak
         if (nodes.size())
             {
             ImGui::Text("Hierarchy");
-
+            ImGui::Separator();
             GraphNode::Ptr root_node = *nodes.begin();
-            if (ImGui::TreeNodeEx(root_node->Name().c_str(), ImGuiTreeNodeFlags_DefaultOpen))
+            if (ImGui::TreeNodeEx(root_node->Name().c_str(), ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_DefaultOpen))
                 {
-                ImGui::PushStyleVar(ImGuiStyleVar_IndentSpacing, ImGui::GetFontSize() * 2); // Increase spacing to differentiate leaves from expanded contents.
                 ShowNodeList(root_node->Children());
-
-                ImGui::PopStyleVar();
                 ImGui::TreePop();
                 }
             }
@@ -40,23 +38,26 @@ namespace oak
     //////////////////////////////////////////////////////////////////////////
     void ResourceTree::OnGraphEvent(GraphEvent evt, GraphNode::Ptr node)
         {
+        ImGuiTreeNodeFlags base_flag = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
+
         switch (node->Type())
             {
             case NodeType::unknown:
-                node->VisualState(std::make_shared<TreeVisualState>(false, ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_Bullet));
+                node->VisualState(std::make_shared<TreeVisualState>(false, base_flag | ImGuiTreeNodeFlags_Leaf));
                 break;
             case NodeType::root:
-                node->VisualState(std::make_shared<TreeVisualState>(false, ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick));
+                node->VisualState(std::make_shared<TreeVisualState>(false, base_flag));
                 break;
             case NodeType::directory:
-                node->VisualState(std::make_shared<TreeVisualState>(false, ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick));
+                node->VisualState(std::make_shared<TreeVisualState>(false, base_flag));
                 break;
             case NodeType::file:
                 {
-                switch (node->FileType())
+                FileNode::Ptr fnode = dynamic_pointer_cast<FileNode>(node);
+                switch (fnode->FileType())
                     {
                     case NodeFileType::config:
-                        node->VisualState(std::make_shared<TreeVisualState>(false, ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick));
+                        node->VisualState(std::make_shared<TreeVisualState>(false, base_flag));
                         break;
                     case NodeFileType::not_a_file:
                     case NodeFileType::unknown:
@@ -68,19 +69,19 @@ namespace oak
                     case NodeFileType::library:
                     case NodeFileType::font:
                     default:
-                        node->VisualState(std::make_shared<TreeVisualState>(false, ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_Bullet));
+                        node->VisualState(std::make_shared<TreeVisualState>(false, base_flag | ImGuiTreeNodeFlags_Leaf));
                         break;
                     }
                 }
                 break;
             case NodeType::include:
-                node->VisualState(std::make_shared<TreeVisualState>(false, ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_Bullet));
+                node->VisualState(std::make_shared<TreeVisualState>(false, base_flag | ImGuiTreeNodeFlags_Leaf));
                 break;
             case NodeType::section:
-                node->VisualState(std::make_shared<TreeVisualState>(false, ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick));
+                node->VisualState(std::make_shared<TreeVisualState>(false, base_flag | ImGuiTreeNodeFlags_Leaf));
                 break;
             case NodeType::property:
-                node->VisualState(std::make_shared<TreeVisualState>(false, ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_Bullet));
+                node->VisualState(std::make_shared<TreeVisualState>(false, base_flag | ImGuiTreeNodeFlags_Leaf));
                 break;
             default:
                 break;
@@ -97,12 +98,13 @@ namespace oak
     //////////////////////////////////////////////////////////////////////////
     void ResourceTree::ShowNode(GraphNode::Ptr node)
         {
-
-        TreeVisualState::Ptr vstate = std::static_pointer_cast<TreeVisualState>(node->VisualState());
-        ImGuiTreeNodeFlags node_flags = vstate->m_flags | ((m_selected == node) ? ImGuiTreeNodeFlags_Selected : 0);
-
-        if (ImGui::TreeNodeEx((void*)(intptr_t)node.get(), node_flags, node->Name().c_str()))
+        if (node->Type() != NodeType::property)
             {
+            TreeVisualState::Ptr vstate = std::static_pointer_cast<TreeVisualState>(node->VisualState());
+            ImGuiTreeNodeFlags node_flags = vstate->m_flags | ((m_selected == node) ? ImGuiTreeNodeFlags_Selected : 0);
+
+            bool opened = ImGui::TreeNodeEx((void*)(intptr_t)node.get(), node_flags, node->Name().c_str());
+
             if (ImGui::IsItemClicked())
                 {
                 if (m_selected != node)
@@ -110,13 +112,33 @@ namespace oak
                 m_selected = node;
                 }
 
-            const GraphNodeList & children = node->Children();
+            if (node->Type() == NodeType::section)
+                {
+                if (ImGui::BeginPopupContextItem())
+                    {
+                    if (ImGui::MenuItem("New camera"))
+                        {
+                        ImGui::Text("plopl");
+                        }
 
-            if (children.size())
-                ShowNodeList(children);
+                    if (ImGui::MenuItem("New camera2"))
+                        {
+                        }
 
-            ImGui::TreePop();
+                    ImGui::EndPopup();
+                    }                }
+
+            if (opened)
+                {
+                const GraphNodeList & children = node->Children();
+
+                if (children.size())
+                    ShowNodeList(children);
+
+                ImGui::TreePop();
+                }
             }
+
         }
 
 

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "GraphNode.h"
 #include "StringUtility.h"
+#include "NodeTypes.h"
 
 namespace oak
     {
@@ -15,19 +16,6 @@ namespace oak
     DEFINE_ENUM_ENTRY(NodeType::property, "property")
     DEFINE_ENUM_ENTRY_END()
 
-
-    DEFINE_ENUM_ENTRY_BEGIN(NodeFileType)
-    DEFINE_ENUM_ENTRY(NodeFileType::not_a_file, "not_a_file")
-    DEFINE_ENUM_ENTRY(NodeFileType::unknown, "unknown")
-    DEFINE_ENUM_ENTRY(NodeFileType::config, "config")
-    DEFINE_ENUM_ENTRY(NodeFileType::script, "script")
-    DEFINE_ENUM_ENTRY(NodeFileType::image, "image")
-    DEFINE_ENUM_ENTRY(NodeFileType::sound, "sound")
-    DEFINE_ENUM_ENTRY(NodeFileType::shader, "shader")
-    DEFINE_ENUM_ENTRY(NodeFileType::executable, "executable")
-    DEFINE_ENUM_ENTRY(NodeFileType::library, "library")
-    DEFINE_ENUM_ENTRY(NodeFileType::font, "font")
-    DEFINE_ENUM_ENTRY_END()
 
     DEFINE_ENUM_ENTRY_BEGIN(GraphEvent)
     DEFINE_ENUM_ENTRY(GraphEvent::add, "add")
@@ -56,16 +44,9 @@ namespace oak
 
 
     //////////////////////////////////////////////////////////////////////////
-    GraphNode::GraphNode(const std::string & n, NodeType t) : GraphNode(n, "", t)
-        {
-        }
-
-    //////////////////////////////////////////////////////////////////////////
-    GraphNode::GraphNode(const std::string & n, const std::string & desc, NodeType t) :
+    GraphNode::GraphNode(const std::string & n, NodeType t) :
         m_name(n),
-        m_description(desc),
-        m_type(t),
-        m_file_type(NodeFileType::not_a_file)
+        m_type(t)
         {
         }
 
@@ -106,7 +87,7 @@ namespace oak
         filesystem::path root_path = folder;
 
         GraphNodeList nodes;
-        GraphNode::Ptr root_node = nodes.emplace_back(std::make_shared<GraphNode>("root", root_path.string(), NodeType::root));
+        GraphNode::Ptr root_node = nodes.emplace_back(std::make_shared<RootNode>("root"));
         m_Event.Signal([=](IGraphListener * l) { l->OnGraphEvent(GraphEvent::add, root_node); });
         BuildDirectory(root_node, root_path);
 
@@ -124,7 +105,7 @@ namespace oak
             filesystem::path cur_path = fs_node.path();
             if (filesystem::is_directory(cur_path))
                 {
-                GraphNode::Ptr cur_node = std::make_shared<GraphNode>(cur_path.filename().string(), cur_path.string(), NodeType::directory);
+                DirectoryNode::Ptr cur_node = std::make_shared<DirectoryNode>(cur_path.string());
                 parent_node->AddChild(cur_node);
                 m_Event.Signal([=](IGraphListener * l) { l->OnGraphEvent(GraphEvent::add, cur_node); });
                 BuildDirectory(cur_node, cur_path);
@@ -135,7 +116,7 @@ namespace oak
 
                 if (!IsInGroup(cur_path.filename().string(), g_system_files))
                     {
-                    GraphNode::Ptr cur_node = std::make_shared<GraphNode>(cur_path.filename().string(), cur_path.string(), NodeType::file);
+                    FileNode::Ptr cur_node = std::make_shared<FileNode>(cur_path.string());
                     parent_node->AddChild(cur_node);
 
                     // detect type of file
@@ -175,13 +156,13 @@ namespace oak
         OrxIniFile * pfile = m_ini_container.LoadFile(filename.string());
         for (auto item : pfile->GetSections())
             {
-            GraphNode::Ptr cur_node = std::make_shared<GraphNode>(item->GetName(), NodeType::section);
+            SectionNode::Ptr cur_node = std::make_shared<SectionNode>(item->GetName());
             parent_node->AddChild(cur_node);
             m_Event.Signal([=](IGraphListener * l) { l->OnGraphEvent(GraphEvent::add, cur_node); });
 
             for (auto pp : item->GetKeys())
                 {
-                GraphNode::Ptr prop_node = std::make_shared<GraphNode>(pp->GetName(), NodeType::property);
+                PropertyNode::Ptr prop_node = std::make_shared<PropertyNode>(pp->GetName(), pp->GetValue());
                 cur_node->AddChild(prop_node);
                 m_Event.Signal([=](IGraphListener * l) { l->OnGraphEvent(GraphEvent::add, prop_node); });
                 }

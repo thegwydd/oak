@@ -28,6 +28,7 @@ namespace oak
             oak::GraphNode::Ptr SelectedNode() { return m_selected_node; };
 
 
+
         public:
             oak::Graph & Graph() { return m_graph; }
 

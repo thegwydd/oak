@@ -203,10 +203,13 @@ copy /Y "$(ProjectDir)*.ini" "$(SolutionDir)bin\$(Configuration)\"</Command>
     <ClInclude Include="Core.h" />
     <ClInclude Include="InspectorControl.h" />
     <ClInclude Include="MainWindow.h" />
+    <ClInclude Include="NodeTypes.h" />
     <ClInclude Include="oak.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="OrxIni.h" />
     <ClInclude Include="ResourceTree.h" />
+    <ClInclude Include="SectionEditors.h" />
+    <ClInclude Include="SelectorWindow.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="StringUtility.h" />
     <ClInclude Include="targetver.h" />
@@ -230,10 +233,13 @@ copy /Y "$(ProjectDir)*.ini" "$(SolutionDir)bin\$(Configuration)\"</Command>
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="InspectorControl.cpp" />
     <ClCompile Include="MainWindow.cpp" />
+    <ClCompile Include="NodeTypes.cpp" />
     <ClCompile Include="oak.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="OrxIni.cpp" />
     <ClCompile Include="ResourceTree.cpp" />
+    <ClCompile Include="SectionEditors.cpp" />
+    <ClCompile Include="SelectorWindow.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
