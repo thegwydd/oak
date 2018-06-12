@@ -65,10 +65,10 @@
     <ClInclude Include="UiEditor.h">
       <Filter>core\ui</Filter>
     </ClInclude>
-    <ClInclude Include="EditorFatory.h">
+    <ClInclude Include="Editors.h">
       <Filter>core</Filter>
     </ClInclude>
-    <ClInclude Include="Editors.h">
+    <ClInclude Include="EditorFactory.h">
       <Filter>core</Filter>
     </ClInclude>
   </ItemGroup>
@@ -128,10 +128,10 @@
     <ClCompile Include="UiEditor.cpp">
       <Filter>core\ui</Filter>
     </ClCompile>
-    <ClCompile Include="EditorFatory.cpp">
+    <ClCompile Include="Editors.cpp">
       <Filter>core</Filter>
     </ClCompile>
-    <ClCompile Include="Editors.cpp">
+    <ClCompile Include="EditorFactory.cpp">
       <Filter>core</Filter>
     </ClCompile>
   </ItemGroup>

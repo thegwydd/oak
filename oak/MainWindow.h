@@ -3,7 +3,7 @@
 #include "UiWindow.h"
 #include "SelectorWindow.h"
 #include "ViewportControl.h"
-#include "EditorFatory.h"
+#include "EditorFactory.h"
 
 namespace oak
     {

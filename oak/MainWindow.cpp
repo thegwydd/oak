@@ -71,7 +71,7 @@ namespace oak
             // navigation buttons
             if (m_editors[(int)EditorType::Selector])
                 {
-                if ((m_current_editor != nullptr) && (m_current_editor == m_editors[(int)EditorType::Selector]))
+                if ((m_current_editor != nullptr) && (m_current_editor != m_editors[(int)EditorType::Selector]))
                     {
                     if (ImGui::Button("Back", ImVec2(-1, 0)))
                         m_current_editor = m_editors[(int)EditorType::Selector];

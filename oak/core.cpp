@@ -132,6 +132,25 @@ namespace oak
     //////////////////////////////////////////////////////////////////////////
     void Core::OnCreateNewDirectory(GraphNode::Ptr node)
         {
+        char directory_name[255];
+
+        bool do_create = false;
+        ImGui::OpenPopup("Insert name");
+        if (ImGui::BeginPopup("Insert name"))
+            {
+            ImGui::InputText("Directory Name", directory_name, 255);
+            if (ImGui::Button("OK"))
+                do_create = true;
+            ImGui::SameLine();
+            if (ImGui::Button("Cancel"))
+                do_create = false;
+            ImGui::EndPopup();
+            }
+
+        if (do_create)
+            {
+
+            }
 
         }
 
@@ -143,6 +162,18 @@ namespace oak
 
     //////////////////////////////////////////////////////////////////////////
     void Core::OnDeleteDirectory(GraphNode::Ptr node)
+        {
+
+        }
+
+    //////////////////////////////////////////////////////////////////////////
+    void Core::OnEditFileAs(GraphNode::Ptr node, EditorType type)
+        {
+
+        }
+
+    //////////////////////////////////////////////////////////////////////////
+    void Core::OnCreateNewConfigFile(GraphNode::Ptr node)
         {
 
         }

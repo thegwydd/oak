@@ -21,10 +21,13 @@ namespace oak
     bool ResourceTree::Initialize() 
         { 
         m_core->Graph().m_Event += this;
-
         
         m_menu_map[NodeType::unknown] = {};
-        m_menu_map[NodeType::root] = {};
+        m_menu_map[NodeType::root] = {
+                { "Create directory", [&](GraphNode::Ptr node) { m_core->OnCreateNewDirectory(node); } },
+                { "Create config file", [&](GraphNode::Ptr node) { m_core->OnCreateNewConfigFile(node); } },
+            };
+
         m_menu_map[NodeType::directory] = {
                 { "Create new", [&](GraphNode::Ptr node) { m_core->OnCreateNewDirectory(node); } },
                 { "Rename", [&](GraphNode::Ptr node) { m_core->OnRenameDirectory(node); } },
@@ -42,7 +45,7 @@ namespace oak
             };
 
         MenuItems create_section_menu_items;
-        for (int a = 0; a < (uint32_t)EditorType::EndOfEnum; ++a)
+        for (int a = 1; a < (uint32_t)EditorType::EndOfEnum; ++a)
             {
             create_section_menu_items.push_back({
                  EnumMapper::GetText<EditorType>((EditorType)a),
@@ -90,6 +93,26 @@ namespace oak
             GraphNode::Ptr root_node = *nodes.begin();
             if (ImGui::TreeNodeEx(root_node->Name().c_str(), ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_DefaultOpen))
                 {
+                TreeVisualState::Ptr vstate = std::static_pointer_cast<TreeVisualState>(root_node->VisualState());
+                ImGuiTreeNodeFlags node_flags = vstate->m_flags | ((m_selected == root_node) ? ImGuiTreeNodeFlags_Selected : 0);
+
+                if (ImGui::IsItemClicked())
+                    {
+                    if (m_selected != root_node)
+                        m_core->SelectedNode(root_node);
+                    m_selected = root_node;
+                    }
+
+                if (vstate->m_menu_items.size())
+                    {
+                    if (ImGui::BeginPopupContextItem())
+                        {
+                        for (auto menu_item : vstate->m_menu_items)
+                            ShowMenu(root_node, menu_item);
+
+                        ImGui::EndPopup();
+                        }                    }
+
                 ShowNodeList(root_node->Children());
                 ImGui::TreePop();
                 }
@@ -104,13 +127,20 @@ namespace oak
         switch (node->Type())
             {
             case NodeType::unknown:
-                node->VisualState(std::make_shared<TreeVisualState>(false, base_flag | ImGuiTreeNodeFlags_Leaf, m_menu_map[node->Type()]));
+                node->VisualState(std::make_shared<TreeVisualState>(false, base_flag | ImGuiTreeNodeFlags_Leaf));
                 break;
             case NodeType::root:
-                node->VisualState(std::make_shared<TreeVisualState>(false, base_flag, m_menu_map[node->Type()]));
+                node->VisualState(std::make_shared<TreeVisualState>(false, base_flag, MenuItems({
+                    { "Create directory", [&](GraphNode::Ptr node) { m_core->OnCreateNewDirectory(node); } },
+                    { "Create config file", [&](GraphNode::Ptr node) { m_core->OnCreateNewConfigFile(node); } },
+                    })));
                 break;
             case NodeType::directory:
-                node->VisualState(std::make_shared<TreeVisualState>(false, base_flag, m_menu_map[node->Type()]));
+                node->VisualState(std::make_shared<TreeVisualState>(false, base_flag, MenuItems({
+                    { "Create new", [&](GraphNode::Ptr node) { m_core->OnCreateNewDirectory(node); } },
+                    { "Rename", [&](GraphNode::Ptr node) { m_core->OnRenameDirectory(node); } },
+                    { "Delete", [&](GraphNode::Ptr node) { m_core->OnDeleteDirectory(node); } },
+                    })));
                 break;
             case NodeType::file:
                 {
@@ -118,7 +148,11 @@ namespace oak
                 switch (fnode->FileType())
                     {
                     case NodeFileType::config:
-                        node->VisualState(std::make_shared<TreeVisualState>(false, base_flag, m_menu_map[node->Type()]));
+                        node->VisualState(std::make_shared<TreeVisualState>(false, base_flag, MenuItems({
+                            { "Edit as Main Settings...", [&](GraphNode::Ptr node) { m_core->OnRenameFile(node); } },
+                            { "Rename...", [&](GraphNode::Ptr node) { m_core->OnRenameFile(node); } },
+                            { "Delete", [&](GraphNode::Ptr node) { m_core->OnDeleteFile(node); } },
+                            })));
                         break;
                     case NodeFileType::not_a_file:
                     case NodeFileType::unknown:
@@ -139,7 +173,10 @@ namespace oak
                 node->VisualState(std::make_shared<TreeVisualState>(false, base_flag | ImGuiTreeNodeFlags_Leaf, m_menu_map[node->Type()]));
                 break;
             case NodeType::section:
+                {
+                // recognize section
                 node->VisualState(std::make_shared<TreeVisualState>(false, base_flag | ImGuiTreeNodeFlags_Leaf, m_menu_map[node->Type()]));
+                }
                 break;
             case NodeType::property:
                 node->VisualState(std::make_shared<TreeVisualState>(false, base_flag | ImGuiTreeNodeFlags_Leaf, m_menu_map[node->Type()]));

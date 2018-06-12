@@ -31,6 +31,8 @@ namespace oak
             void OnRenameDirectory(GraphNode::Ptr node);
             void OnDeleteDirectory(GraphNode::Ptr node);
 
+            void OnEditFileAs(GraphNode::Ptr node, EditorType type);
+            void OnCreateNewConfigFile(GraphNode::Ptr node);
             void OnRenameFile(GraphNode::Ptr node);
             void OnDeleteFile(GraphNode::Ptr node);
 

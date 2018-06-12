@@ -195,7 +195,7 @@ copy /Y "$(ProjectDir)*.ini" "$(SolutionDir)bin\$(Configuration)\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="EditorFatory.h" />
+    <ClInclude Include="EditorFactory.h" />
     <ClInclude Include="Editors.h" />
     <ClInclude Include="EnumUtility.h" />
     <ClInclude Include="Event.h" />
@@ -221,7 +221,7 @@ copy /Y "$(ProjectDir)*.ini" "$(SolutionDir)bin\$(Configuration)\"</Command>
     <ClInclude Include="ViewportControl.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="EditorFatory.cpp" />
+    <ClCompile Include="EditorFactory.cpp" />
     <ClCompile Include="Editors.cpp" />
     <ClCompile Include="GraphNode.cpp" />
     <ClCompile Include="imgui_dock.cpp" />
